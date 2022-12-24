@@ -1,5 +1,7 @@
+import Words from "./components/Words";
+
 function App() {
-  return <h1 className="text-red-300">Hello</h1>;
+  return <Words />;
 }
 
 export default App;
