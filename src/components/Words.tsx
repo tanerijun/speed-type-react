@@ -1,9 +1,3 @@
-import { faker } from "@faker-js/faker";
-
-const words = faker.random.words(20);
-
-function Words() {
+export default function Words({ words }: { words: string }) {
   return <div className="text-slate-500 text-2xl">{words}</div>;
 }
-
-export default Words;
