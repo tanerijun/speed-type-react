@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
+import { State } from "../hooks/useGame";
 import { formatPercent } from "../utils/helpers";
 
 interface Props {
+  state: State;
   errors: number;
   accuracy: number;
   total: number;
@@ -9,6 +11,7 @@ interface Props {
 }
 
 export default function GameOver({
+  state,
   errors,
   accuracy,
   total,
@@ -19,39 +22,41 @@ export default function GameOver({
   const duration = { duration: 0.3 };
 
   return (
-    <ul
-      className={`flex flex-col items-center text-primary-400 space-y-3 ${className}`}
-    >
-      <motion.li
-        initial={initial}
-        animate={animate}
-        transition={{ ...duration, delay: 0 }}
-        className="text-xl font-semibold"
+    state === "end" && (
+      <ul
+        className={`flex flex-col items-center text-primary-400 space-y-3 ${className}`}
       >
-        Game Over
-      </motion.li>
-      <motion.li
-        initial={initial}
-        animate={animate}
-        transition={{ ...duration, delay: 0.5 }}
-      >
-        Accuracy: {formatPercent(accuracy)}
-      </motion.li>
-      <motion.li
-        initial={initial}
-        animate={animate}
-        transition={{ ...duration, delay: 1 }}
-        className="text-red-500"
-      >
-        Errors: {errors}
-      </motion.li>
-      <motion.li
-        initial={initial}
-        animate={animate}
-        transition={{ ...duration, delay: 1.5 }}
-      >
-        Typed: {total}
-      </motion.li>
-    </ul>
+        <motion.li
+          initial={initial}
+          animate={animate}
+          transition={{ ...duration, delay: 0 }}
+          className="text-xl font-semibold"
+        >
+          Game Over
+        </motion.li>
+        <motion.li
+          initial={initial}
+          animate={animate}
+          transition={{ ...duration, delay: 0.5 }}
+        >
+          Accuracy: {formatPercent(accuracy)}
+        </motion.li>
+        <motion.li
+          initial={initial}
+          animate={animate}
+          transition={{ ...duration, delay: 1 }}
+          className="text-red-500"
+        >
+          Errors: {errors}
+        </motion.li>
+        <motion.li
+          initial={initial}
+          animate={animate}
+          transition={{ ...duration, delay: 1.5 }}
+        >
+          Typed: {total}
+        </motion.li>
+      </ul>
+    )
   );
 }
