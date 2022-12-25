@@ -1,3 +1,5 @@
+import Caret from "./Caret";
+
 interface Props {
   userInput: string;
   className: string;
@@ -11,6 +13,7 @@ export default function Typing({ userInput, className }: Props) {
       {chars.map((char, index) => {
         return <Character key={`${char}_${index}`} char={char} />;
       })}
+      <Caret />
     </div>
   );
 }
