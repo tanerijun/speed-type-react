@@ -21,20 +21,30 @@ export default function useGame() {
   const areWordsFinished = cursorPosition === words.length;
 
   const sumErrors = useCallback(() => {
-    const wordsReached = words.substring(0, cursorPosition);
+    const wordsReached = words.substring(
+      0,
+      Math.min(cursorPosition, words.length)
+    );
     setErrors((prev) => prev + countErrors(typed, wordsReached));
   }, [typed, words, cursorPosition]);
+
+  const restartGame = useCallback(() => {
+    resetTimer();
+    setState("start");
+    setErrors(0);
+    updateWords();
+    clearTyped();
+  }, [clearTyped, updateWords, resetTimer]);
 
   useEffect(() => {
     if (isStart) {
       setState("run");
       startTimer();
     }
-  }, [isStart, startTimer, cursorPosition]);
+  }, [isStart, startTimer]);
 
   useEffect(() => {
     if (!timeLeft && state === "run") {
-      console.log("Time's up");
       setState("end");
       sumErrors();
     }
@@ -43,29 +53,11 @@ export default function useGame() {
   // If user typed all the words, generate a new list of words
   useEffect(() => {
     if (areWordsFinished) {
-      console.log("All words typed");
       sumErrors();
       updateWords();
       clearTyped();
     }
-  }, [
-    cursorPosition,
-    words,
-    clearTyped,
-    typed,
-    areWordsFinished,
-    updateWords,
-    sumErrors,
-  ]);
-
-  const restartGame = useCallback(() => {
-    console.log("Restarting game");
-    resetTimer();
-    setState("start");
-    setErrors(0);
-    updateWords();
-    clearTyped();
-  }, [clearTyped, updateWords, resetTimer]);
+  }, [clearTyped, areWordsFinished, updateWords, sumErrors]);
 
   return { state, words, timeLeft, typed, errors, totalTyped, restartGame };
 }

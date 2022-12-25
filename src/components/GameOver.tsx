@@ -21,8 +21,8 @@ export default function GameOver({
   const animate = { opacity: 1 };
   const duration = { duration: 0.3 };
 
-  return (
-    state === "end" && (
+  if (state === "end") {
+    return (
       <ul
         className={`flex flex-col items-center text-primary-400 space-y-3 ${className}`}
       >
@@ -57,6 +57,8 @@ export default function GameOver({
           Typed: {total}
         </motion.li>
       </ul>
-    )
-  );
+    );
+  } else {
+    return null;
+  }
 }
